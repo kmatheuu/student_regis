@@ -1,0 +1,71 @@
+#include <iostream>
+using namespace std;
+
+struct ppl {
+   int id;
+   string name;
+   int SRCODE;
+   string subcode;
+   string prof;
+   string time;
+   ppl* next;
+};
+
+int main() {
+   ppl* head = nullptr;
+   ppl* temp = nullptr; // temp ppl
+   int pplno;
+   int x;
+   int found;
+
+   cout << "How many student you want to input?\n";
+   cin >> pplno;
+
+   for (int i = 0; i < pplno; i++) {
+      cout << "----Enter the data for student no." << i + 1 << "----\n";
+      temp = new ppl();
+      cout << "Enter the SRCODE: ";
+      cin >> temp->id;
+      cout << "Enter the Name: ";
+      cin >> temp->name;
+      cout << "Enter the subject code: ";
+      cin >> temp->subcode;
+      cout << "Enter professor name: ";
+      cin >> temp->prof;
+      cout << "Enter schedule time: ";
+      cin >> temp->time;
+
+      temp->next = head;
+      head = temp;
+   }
+
+   cout << "\nEnter the SRCODE to display the details: ";
+   cin >> x;
+
+   temp = head; // Start traversing from the head
+
+   while (temp != nullptr) {
+      if (x == temp->id) {
+         cout << "\nName: " << temp->name;
+         cout << "\nDetails: " << temp->subcode << ", " << temp->prof << ", " << temp->time;
+         found = true;
+         break;
+      }
+      temp = temp->next; // next node
+   }
+
+   if (found == 0)
+      cout << "\nThe student identified by the given ID does not exist.";
+
+   cout << endl;
+
+   // Clean up the memory by deleting all nodes
+   temp = head;
+   while (temp != nullptr) {
+      ppl* nextNode = temp->next;
+      delete temp;
+      temp = nextNode;
+   }
+
+   return 0;
+}
